@@ -1,0 +1,76 @@
+
+# --env-file 
+# mention the verstion
+version: "3.8"
+
+
+# service have many different containers
+services:
+  # three containersnames have 
+  # 1
+  mongodb:
+    # imagename
+    image: "mongo"
+    # its will remove atomatically and detache mode
+    volumes:
+      - data:/data/db 
+    container_name: mongodb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongo
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    # option
+    # if key and value pairs not required -
+    # but singel value is required
+    env_file:
+      - ./env/mongo.env
+    # its will create atomically network
+    # networks:
+    #   - networkName
+  # 2
+  backend:
+    build: "./{Path}"
+    # build:
+    #   context: ./backend
+    #   dockerfile: Dockerfile
+    # args:
+    #   some-arg: 1
+    ports:
+      - "3000:80"
+
+    volumes:
+      # named volume
+      - logs:/app/logs
+      # bint mount
+      - ./bakend:/app
+      # anaumus volumes
+      - /app/node_modules
+    env_file:
+      - ./env/backend.env
+
+    # its dependence on
+    depends_on:
+      - mongodb
+
+
+
+  frontend:
+    build: ./
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app/src 
+    # --it
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+      
+volumes:
+  data:
+  logs:
+
+
+
+
+
+  

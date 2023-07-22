@@ -1,0 +1,9 @@
+student-name: Sagar
+student-age: 23
+subject-marks:
+  science: 95
+  mathematics: 90
+  english: 90
+sports:
+- Cricket
+- Football

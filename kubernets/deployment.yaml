@@ -1,0 +1,28 @@
+# version apps/v1
+apiVersion: apps/v1
+# this is Deployment
+kind: Deployment
+metadata:
+  # deployment app name
+  name: second-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: second-app
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: second-app
+        tier: backend
+    spec:
+      containers:
+        - name: second-node
+          image: academind/kub-first-app:2
+
+
+
+
+
+
